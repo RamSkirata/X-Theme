@@ -1,0 +1,7 @@
+/*
+ * Editor styles to keep backend visual rhythm close to frontend.
+ */
+
+body.block-editor-page .editor-styles-wrapper {
+	font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}

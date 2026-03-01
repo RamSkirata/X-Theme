@@ -1,0 +1,273 @@
+/*
+Theme Name: Kiezbrand Theme
+Theme URI: https://example.com/kiezbrand-theme
+Author: Kiezbrand Dev Team
+Author URI: https://example.com
+Description: A custom Elementor-ready WordPress theme for Kiez tours and merchandise brands, with a bold nightlife aesthetic and conversion-focused homepage.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: kiezbrand-theme
+Tags: custom-logo, custom-menu, featured-images, e-commerce, elementor, one-column, two-columns, blog, responsive-layout
+*/
+
+/*
+ * -------------------------------------------------------------
+ * Base Reset
+ * -------------------------------------------------------------
+ * Keep the reset small and modern to avoid fighting Elementor styles.
+ */
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 16px;
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	line-height: 1.6;
+	color: #f5f5f5;
+	background-color: #101012;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+a {
+	color: #ff2d95;
+	text-decoration: none;
+}
+
+a:hover,
+a:focus {
+	color: #ff66b8;
+}
+
+/*
+ * -------------------------------------------------------------
+ * Accessibility Helpers
+ * -------------------------------------------------------------
+ */
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+	background-color: #f1f1f1;
+	clip: auto !important;
+	clip-path: none;
+	color: #21759b;
+	display: block;
+	font-size: 14px;
+	font-size: 0.875rem;
+	font-weight: 700;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000;
+}
+
+/*
+ * -------------------------------------------------------------
+ * Layout Utilities
+ * -------------------------------------------------------------
+ */
+.site-wrapper {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.container {
+	width: min(1200px, 92%);
+	margin-inline: auto;
+}
+
+.site-content {
+	flex: 1;
+	padding: 2rem 0 3rem;
+}
+
+/*
+ * -------------------------------------------------------------
+ * Header and Navigation
+ * -------------------------------------------------------------
+ */
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 99;
+	background: rgba(16, 16, 18, 0.95);
+	backdrop-filter: blur(8px);
+	border-bottom: 1px solid rgba(255, 45, 149, 0.25);
+}
+
+.site-header__inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.9rem 0;
+	gap: 1rem;
+}
+
+.site-branding img {
+	max-height: 52px;
+	width: auto;
+}
+
+.site-title {
+	font-size: 1.1rem;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin: 0;
+}
+
+.site-title a {
+	color: #ffffff;
+}
+
+.main-navigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.main-navigation a {
+	display: inline-block;
+	padding: 0.45rem 0.6rem;
+	border-radius: 6px;
+	font-weight: 600;
+	color: #fefefe;
+}
+
+.main-navigation a:hover,
+.main-navigation a:focus {
+	background: rgba(255, 45, 149, 0.12);
+}
+
+/*
+ * -------------------------------------------------------------
+ * Front Page Sections
+ * -------------------------------------------------------------
+ */
+.hero {
+	padding: 3.5rem 0 2.5rem;
+	background: linear-gradient(140deg, #181820 5%, #230a1d 100%);
+}
+
+.hero h1 {
+	font-size: clamp(2rem, 6vw, 3.2rem);
+	line-height: 1.1;
+	margin-bottom: 1rem;
+}
+
+.hero p {
+	font-size: 1.05rem;
+	max-width: 62ch;
+}
+
+.button-row {
+	display: flex;
+	gap: 0.9rem;
+	flex-wrap: wrap;
+	margin-top: 1.3rem;
+}
+
+.kiez-button {
+	display: inline-block;
+	padding: 0.72rem 1.15rem;
+	font-weight: 700;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	transition: all 0.2s ease;
+}
+
+.kiez-button--primary {
+	background: #ff2d95;
+	color: #140a13;
+}
+
+.kiez-button--primary:hover,
+.kiez-button--primary:focus {
+	background: #ff66b8;
+}
+
+.kiez-button--secondary {
+	background: transparent;
+	border-color: #ff2d95;
+	color: #ff9dd2;
+}
+
+.kiez-button--secondary:hover,
+.kiez-button--secondary:focus {
+	background: rgba(255, 45, 149, 0.1);
+}
+
+.info-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1rem;
+	margin-top: 2rem;
+}
+
+.info-card {
+	background: rgba(255, 255, 255, 0.02);
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	padding: 1rem;
+	border-radius: 10px;
+}
+
+/*
+ * -------------------------------------------------------------
+ * Footer
+ * -------------------------------------------------------------
+ */
+.site-footer {
+	padding: 1.2rem 0;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	font-size: 0.95rem;
+	color: #cccccc;
+}
+
+.site-footer a {
+	color: #ffffff;
+}
+
+/*
+ * -------------------------------------------------------------
+ * Responsive Enhancements
+ * -------------------------------------------------------------
+ */
+@media (max-width: 700px) {
+	.site-header__inner {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}
