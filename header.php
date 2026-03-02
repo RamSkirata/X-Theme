@@ -6,7 +6,8 @@
  */
 
 ?><!doctype html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> itemscope itemtype="https://schema.org/WebPage">
+
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,26 +19,27 @@
 <div id="page" class="site-wrapper">
 	<a class="screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'kiezbrand-theme' ); ?></a>
 
-	<header id="masthead" class="site-header">
+	<header id="masthead" class="site-header" itemscope itemtype="https://schema.org/WPHeader">
 		<div class="container site-header__inner">
-			<div class="site-branding">
+			<div class="site-branding" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 				<?php
 				if ( has_custom_logo() ) {
 					the_custom_logo();
 				} else {
 					?>
-					<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a></p>
+					<p class="site-title" itemprop="name"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a></p>
 					<?php
 				}
 				?>
 			</div>
 
-			<nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'kiezbrand-theme' ); ?>">
+			<nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Primary menu', 'kiezbrand-theme' ); ?>" itemscope itemtype="https://schema.org/SiteNavigationElement">
 				<?php
 				wp_nav_menu(
 					array(
 						'theme_location' => 'primary',
 						'menu_id'        => 'primary-menu',
+                        'container'      => false,
 						'fallback_cb'    => false,
 					)
 				);

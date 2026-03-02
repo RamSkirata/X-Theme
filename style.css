@@ -41,6 +41,7 @@ img {
 	max-width: 100%;
 	height: auto;
 	display: block;
+    border-radius: 12px;
 }
 
 a {
@@ -77,7 +78,6 @@ a:focus {
 	clip-path: none;
 	color: #21759b;
 	display: block;
-	font-size: 14px;
 	font-size: 0.875rem;
 	font-weight: 700;
 	height: auto;
@@ -108,7 +108,45 @@ a:focus {
 
 .site-content {
 	flex: 1;
-	padding: 2rem 0 3rem;
+	padding: 0 0 3rem;
+}
+
+.section {
+	padding: 3.5rem 0;
+}
+
+.section--muted {
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.section--compact {
+	padding: 1.4rem 0;
+}
+
+.section--cta {
+	background: linear-gradient(155deg, #2f1130 10%, #11131f 100%);
+	text-align: center;
+}
+
+.section-header {
+	max-width: 68ch;
+	margin-bottom: 1.5rem;
+}
+
+.section-header h1,
+.section-header h2 {
+	line-height: 1.2;
+	margin: 0 0 0.7rem;
+}
+
+.eyebrow {
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+	font-size: 0.8rem;
+	color: #ff9dd2;
+	margin: 0 0 0.55rem;
+
 }
 
 /*
@@ -174,30 +212,33 @@ a:focus {
 
 /*
  * -------------------------------------------------------------
- * Front Page Sections
+ * Components and conversion elements
  * -------------------------------------------------------------
  */
 .hero {
-	padding: 3.5rem 0 2.5rem;
+	padding: 4.5rem 0 3rem;
 	background: linear-gradient(140deg, #181820 5%, #230a1d 100%);
 }
+.hero__grid,
+.split-layout {
+	display: grid;
+	grid-template-columns: 1.1fr 0.9fr;
+	gap: 1.5rem;
+	align-items: center;
+}
+
 
 .hero h1 {
 	font-size: clamp(2rem, 6vw, 3.2rem);
-	line-height: 1.1;
+	line-height: 1.08;
 	margin-bottom: 1rem;
-}
-
-.hero p {
-	font-size: 1.05rem;
-	max-width: 62ch;
 }
 
 .button-row {
 	display: flex;
 	gap: 0.9rem;
 	flex-wrap: wrap;
-	margin-top: 1.3rem;
+	margin-top: 1.2rem;
 }
 
 .kiez-button {
@@ -207,6 +248,7 @@ a:focus {
 	border-radius: 8px;
 	border: 1px solid transparent;
 	transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .kiez-button--primary {
@@ -217,6 +259,7 @@ a:focus {
 .kiez-button--primary:hover,
 .kiez-button--primary:focus {
 	background: #ff66b8;
+    color: #190b15;
 }
 
 .kiez-button--secondary {
@@ -230,11 +273,56 @@ a:focus {
 	background: rgba(255, 45, 149, 0.1);
 }
 
-.info-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-	gap: 1rem;
-	margin-top: 2rem;
+.sales-panel,
+.sales-card,
+.profile-card,
+.quote-card {
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid rgba(255, 255, 255, 0.09);
+	border-radius: 12px;
+	padding: 1rem;
+}
+
+.sales-card {
+	overflow: hidden;
+	padding: 0;
+}
+
+.sales-card__content {
+	padding: 1rem;
+}
+
+.card-grid {
+    display: grid;
+    gap: 1rem; 
+}
+.card-grid--three {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.inline-form,
+.stacked-form {
+	display: flex;
+	gap: 0.7rem;
+}
+
+.inline-form {
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.inline-form input,
+.stacked-form input,
+.stacked-form textarea {
+	padding: 0.7rem 0.8rem;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(0, 0, 0, 0.18);
+	color: #fff;
+	border-radius: 8px;
+}
+
+.stacked-form {
+	flex-direction: column;
 }
 
 .info-card {
@@ -265,6 +353,16 @@ a:focus {
  * Responsive Enhancements
  * -------------------------------------------------------------
  */
+@media (max-width: 900px) {
+	.hero__grid,
+	.split-layout,
+	.card-grid--three {
+		grid-template-columns: 1fr;
+	}
+}
+
+
+
 @media (max-width: 700px) {
 	.site-header__inner {
 		align-items: flex-start;

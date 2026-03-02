@@ -25,3 +25,9 @@
 	border: 1px solid rgba(255, 255, 255, 0.08);
 	border-radius: 8px;
 }
+
+.entry-meta {
+	margin-top: 0;
+	font-size: 0.95rem;
+	opacity: 0.9;
+}
