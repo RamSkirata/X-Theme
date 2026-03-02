@@ -205,7 +205,7 @@ add_action( 'wp_enqueue_scripts', 'kiezbrand_theme_scripts' );
  * @param string $handle Script handle.
  * @return array
  */
-function kiezbrand_theme_script_loading_strategy( $tag_data, $handle ) {
+function kiezbrand_theme_script_loading_strategy( $tag_data, $handle = '' ) {
 	if ( 'kiezbrand-theme-main' === $handle ) {
 		$tag_data['strategy'] = 'defer';
 	}
