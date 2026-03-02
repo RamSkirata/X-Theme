@@ -1,290 +1,161 @@
-# Kiezbrand Theme Documentation
+# Kiezbrand Theme – Anleitung von A bis Z
 
-This document is a **complete practical guide** for both developers and content editors working with the Kiezbrand WordPress theme.
+Diese Anleitung zeigt dir Schritt für Schritt, wie du das Theme in WordPress installierst, Seiten korrekt anlegst und mit Inhalten füllst.
 
----
+## 1) Voraussetzungen
 
-## 1) Developer Documentation
+- WordPress **6.0+**
+- PHP **7.4+**
+- Optional (empfohlen): **Elementor** bzw. Elementor Pro, wenn du Header/Footer oder Seiten visuell bauen willst.
 
-### 1.1 Theme architecture
+Die Theme-Headerdaten und Anforderungen stehen in `style.css`.
 
-The theme is a classic PHP-based WordPress theme that keeps logic lightweight and lets Elementor handle most layout/design work.
+## 2) Theme installieren und aktivieren
 
-Core architectural points:
+1. Theme-Ordner `X-Theme` als ZIP packen oder per SFTP in `wp-content/themes/` hochladen.
+2. Im WP-Backend zu **Design → Themes** gehen.
+3. **Kiezbrand Theme** aktivieren.
 
-- **Theme bootstrap + feature registration** lives in `functions.php`.
-  - Registers theme supports (title tag, featured images, HTML5, custom logo, editor styles, responsive embeds).
-  - Registers menu locations (`primary`, `footer`).
-  - Registers Elementor Theme Builder locations.
-  - Enqueues main CSS + component CSS + frontend JS.
-  - Registers widget area (`sidebar-1`).
-- **Templates** use standard WordPress hierarchy:
-  - `front-page.php` for the homepage marketing layout.
-  - `page.php` for pages.
-  - `single.php` for single posts.
-  - `archive.php` for post archives.
-  - `index.php` fallback template.
-- **Reusable layout shell**:
-  - `header.php` defines the HTML head, body open, branding and primary navigation.
-  - `footer.php` currently exists but is empty (no footer markup output from this file yet).
-- **Styling strategy**:
-  - `style.css` holds base reset, typography, layout, header, hero and responsive rules.
-  - `assets/css/components.css` provides reusable content component styles.
-  - `assets/css/editor-style.css` aligns editor typography with frontend feel.
-- **JavaScript strategy**:
-  - `assets/js/main.js` is enqueued but currently empty (ready for progressive enhancement scripts).
+## 3) Wichtige Theme-Funktionen (automatisch aktiv)
 
----
+Nach Aktivierung sind u. a. aktiv:
 
-### 1.2 File structure explanation
+- Beitragsbilder (Featured Images)
+- Menüs: `Primary` und `Footer`
+- Custom Logo
+- Sidebar-Widgetbereich
+- Custom Post Type **Tour** (Slug: `/tours`)
 
-```text
-X-Theme/
-├─ functions.php                  # Theme setup, supports, menus, Elementor locations, assets, sidebar, excerpt filter
-├─ style.css                      # Theme metadata + base and layout styles
-├─ header.php                     # Global header markup and primary navigation
-├─ footer.php                     # Footer template file (currently empty)
-├─ front-page.php                 # Conversion-focused homepage template with placeholder sections
-├─ page.php                       # Standard page rendering
-├─ single.php                     # Single post rendering with meta + featured image
-├─ archive.php                    # Archive listing template with excerpts
-├─ index.php                      # Main fallback loop template
-├─ template-parts/
-│  └─ content-none.php            # “No posts found” message block
-├─ assets/
-│  ├─ css/
-│  │  ├─ components.css           # Shared content and widget styling
-│  │  └─ editor-style.css         # Block editor typography tuning
-│  └─ js/
-│     └─ main.js                  # Frontend JS entry (currently empty)
-└─ screenshot.png                 # Theme preview image
-```
+Diese Logik kommt aus `functions.php`.
 
----
+## 4) Basis-Setup direkt nach Aktivierung
 
-### 1.3 How Elementor integration works
+### 4.1 Permalinks setzen
 
-This theme is Elementor-friendly by design.
+- Gehe zu **Einstellungen → Permalinks**
+- Wähle z. B. **Beitragsname**
+- Speichern
 
-1. In `functions.php`, the theme hooks `elementor/theme/register_locations` and calls `register_all_core_location()`.
-   - This allows Elementor Pro Theme Builder to control core theme locations (e.g., header/footer/single/archive templates where configured in Elementor).
-2. Templates output `the_content()` in page/post contexts.
-   - Elementor writes content into WordPress content, so Elementor-built content renders correctly through normal templates.
-3. CSS is intentionally minimal and utility-focused.
-   - The base reset avoids heavy opinionated styling to reduce conflicts with Elementor widgets.
+So werden Seiten-URLs wie `/about`, `/contact`, `/tours` sauber erzeugt.
 
-Developer note: if Elementor Pro is not active, WordPress templates still render normally and the theme remains functional.
+### 4.2 Logo und Titel
 
----
+- **Design → Customizer → Website-Informationen**
+- Logo hochladen (Theme unterstützt `custom-logo`)
+- Website-Titel/Untertitel setzen
 
-### 1.4 How to extend the theme
+### 4.3 Menüs anlegen
 
-Recommended extension paths:
+- **Design → Menüs**
+- Ein Hauptmenü erstellen und der Position **Primary Menu** zuweisen
+- Ein Fußmenü erstellen und der Position **Footer Menu** zuweisen
 
-#### A) Add a custom post type for tours (optional upgrade)
+> Hinweis: Das Theme nutzt `fallback_cb => false`, d. h. ohne zugewiesenes Menü erscheint nichts in der Navigation.
 
-Current state: tours are represented as normal content placeholders on `front-page.php`.
+## 5) Seitenstruktur richtig aufbauen (wichtig)
 
-If you need scalable tour management:
+Das Theme bringt spezielle Templates mit. Du solltest die folgenden Seiten erstellen:
 
-- Register a `tour` custom post type in `functions.php` or a site plugin.
-- Add archive/single templates (`archive-tour.php`, `single-tour.php`) if needed.
-- Keep Elementor templates for visual design while using CPT data for structure.
+1. **Startseite**
+2. **About**
+3. **Tours Overview**
+4. **Guides & Team**
+5. **Fan Shop**
+6. **Contact**
 
-#### B) Add dedicated template parts
+### 5.1 Startseite erstellen
 
-To reduce duplication across `page.php`, `single.php`, `index.php`, move common article markup into `template-parts/` files and call `get_template_part()`.
+1. **Seiten → Erstellen**
+2. Titel z. B. `Home`
+3. Veröffentlichen
+4. **Einstellungen → Lesen**
+5. „Eine statische Seite“ wählen und diese Seite als **Startseite** setzen
 
-#### C) Add JS enhancements safely
+Die Datei `front-page.php` steuert die Homepage.
 
-Use `assets/js/main.js` for non-blocking enhancements such as:
+### 5.2 Standardseiten mit Template zuweisen
 
-- sticky header interactions,
-- smooth anchor offset fixes,
-- micro-interactions for CTA buttons.
+Erstelle für jede Seite eine neue WP-Seite und weise unter **Seitenattribute → Template** das passende Template zu:
 
-Keep all JS progressive so pages work without script execution.
+- `About` → **About Brand** (`page-about.php`)
+- `Contact` → **Contact & Booking** (`page-contact.php`)
+- `Fan Shop` → **Fan Shop Hub** (`page-fan-shop.php`)
+- `Guides & Team` → **Guides & Team** (`page-guides-team.php`)
+- `Tours Overview` → **Tours Overview** (`page-tours-overview.php`)
 
-#### D) Add theme options carefully
+> Tipp: Slugs möglichst passend halten (`about`, `contact`, `fan-shop`, `guides-team`, `tours-overview`).
 
-For editor-friendly controls, add settings in:
+## 6) Touren anlegen (Custom Post Type)
 
-- Customizer (legacy-compatible), or
-- an options page via ACF/other plugin.
+Im Backend gibt es den Bereich **Tours**.
 
-Use these for global links (ticket provider, shop URL, social links) so editors do not need code edits.
+1. **Tours → Add New Tour**
+2. Titel, Beschreibung und Beitragsbild eintragen
+3. Veröffentlichen
 
----
+- Einzelansicht läuft über `single-tour.php`
+- Archivseite über `/tours` (durch `has_archive => true`) und `archive.php`
 
-### 1.5 Performance notes
+## 7) Inhalte bearbeiten: ohne Elementor vs. mit Elementor
 
-Current performance-positive decisions:
+Viele Templates prüfen, ob die Seite mit Elementor erstellt wurde (`_elementor_edit_mode = builder`).
 
-- Only 2 stylesheets + 1 script are enqueued, versioned with theme version.
-- Script is loaded in footer (`true` in `wp_enqueue_script`) to reduce render-blocking.
-- No heavy JS framework in the theme.
-- CSS is concise and mostly layout-level.
+- **Wenn Elementor-Seite erkannt wird:** `the_content()` wird ausgegeben (du steuerst Layout komplett in Elementor).
+- **Wenn nicht:** Theme zeigt den eingebauten Demo-/Fallback-Abschnitt aus dem jeweiligen Template.
 
-Performance watchouts / improvements:
+Das gilt z. B. für Startseite und die benannten Seiten-Templates.
 
-- `front-page.php` includes placeholder inline styles on sections; migrate these to CSS files for cache efficiency.
-- `main.js` is empty; keep it lean and avoid large dependencies.
-- If adding media-heavy Elementor sections, enforce image compression and responsive image sizes.
+## 8) Blog/News nutzen
 
----
+- Standardbeiträge funktionieren über `index.php`, `single.php`, `archive.php`
+- Excerpt-Länge ist global auf 24 Wörter gesetzt
 
-### 1.6 SEO setup
+Wenn du einen News-Bereich willst:
 
-SEO in the current theme is foundational and plugin-compatible.
+1. Seite `News` erstellen
+2. Unter **Einstellungen → Lesen** als Beitragsseite zuweisen
+3. Beiträge normal unter **Beiträge** anlegen
 
-Already implemented:
+## 9) Widgets/Sidebar
 
-- `title-tag` support lets WordPress/SEO plugins control `<title>`.
-- Semantic template hierarchy with clear heading usage in templates.
-- Archive excerpts (`the_excerpt()`) support cleaner listing pages.
+- Ein Widgetbereich `Sidebar` ist registriert.
+- Unter **Design → Widgets** befüllbar.
 
-Recommended SEO stack for production:
+## 10) Bilder, Farben, Design
 
-- Install and configure an SEO plugin (Yoast, Rank Math, etc.).
-- Set unique SEO titles/meta descriptions per key page (home, tours, fan shop, guide pages).
-- Configure schema via plugin (Organization, Article, Breadcrumb).
-- Ensure one clear H1 per page in Elementor templates.
-- Use descriptive alt text for all tour and merch imagery.
+- Basisstyles liegen in `style.css`
+- Zusätzliche Komponenten in `assets/css/components.css`
+- Editor-Styling in `assets/css/editor-style.css`
+- Frontend-JS in `assets/js/main.js` (defer geladen)
 
----
+## 11) Empfohlener Go-Live-Workflow
 
-## 2) Editor Documentation (Beginner-Friendly)
+1. Logo + Menüs setzen
+2. Startseite festlegen
+3. Alle Kernseiten anlegen und Templates zuweisen
+4. 3–6 Touren erstellen
+5. Kontaktseite mit echtem Formular-Plugin ersetzen (z. B. WPForms/CF7)
+6. Demo-Texte/Bilder durch echte Inhalte ersetzen
+7. Footer-Menü mit Impressum/Datenschutz ergänzen
+8. SEO-Plugin + Caching aktivieren
 
-This section is written for non-developer WordPress users.
+## 12) Häufige Fehler & schnelle Lösung
 
-### 2.1 How to edit pages in Elementor
+- **Navigation leer** → Menüs nicht zugewiesen (Primary/Footer).
+- **Falsches Seitenlayout** → falsches Seitentemplate gewählt.
+- **Startseite zeigt Blog statt Hero** → statische Startseite nicht gesetzt.
+- **Touren nicht unter `/tours` sichtbar** → Permalinks einmal speichern.
+- **Elementor-Layout erscheint nicht** → Seite nicht im Elementor-Build-Modus gespeichert.
 
-1. In WordPress admin, go to **Pages**.
-2. Open the page you want to change.
-3. Click **Edit with Elementor**.
-4. Click any section/widget and update text, images, buttons, and spacing.
-5. Click **Update** to publish.
+## 13) Quick-Checkliste (Copy/Paste)
 
-Tips:
+- [ ] Theme aktiviert
+- [ ] Permalinks gesetzt
+- [ ] Logo hochgeladen
+- [ ] Primary + Footer Menü zugewiesen
+- [ ] Statische Startseite gesetzt
+- [ ] Seiten mit richtigen Templates erstellt
+- [ ] Touren angelegt
+- [ ] Kontaktformular integriert
+- [ ] Impressum/Datenschutz im Footer
 
-- Keep one clear headline at the top of each page.
-- Use consistent button labels (e.g., “Book now”, “See dates”, “Shop now”).
-- Preview on desktop + mobile before publishing.
-
----
-
-### 2.2 How to replace demo content
-
-The current homepage contains placeholder text in `front-page.php`. You can replace this in two ways:
-
-#### Option A (recommended): Elementor homepage
-
-1. Create or open your Home page.
-2. Build the full page in Elementor (hero, tours, testimonials, shop links).
-3. Go to **Settings → Reading**.
-4. Set **Your homepage displays → A static page** and choose your Home page.
-
-#### Option B: Code-based placeholders
-
-If your team still uses the PHP homepage template, a developer must edit `front-page.php` to replace placeholder copy.
-
----
-
-### 2.3 How to add new tours
-
-Current theme does not include a dedicated “Tours” custom post type by default.
-
-Simple workflow (no code):
-
-1. Go to **Posts → Add New** (or create a normal **Page**).
-2. Add tour title, description, images, schedule, and CTA button.
-3. Publish.
-4. Add this new tour link to:
-   - homepage Elementor sections,
-   - primary menu (Appearance → Menus),
-   - any “Featured Tours” widgets/sections.
-
-If you need structured tour management (price fields, duration fields, guide assignment), ask a developer to add a Tours CPT.
-
----
-
-### 2.4 How to update guides
-
-If “guides” are team/member pages:
-
-1. Store each guide as a page or post.
-2. Edit content in Elementor (bio, languages, specialties, photo).
-3. Keep a consistent layout template for every guide profile.
-4. Update links from your main tour pages to the correct guide pages.
-
-Editorial checklist for each guide profile:
-
-- Clear profile photo
-- Short bio paragraph
-- Languages spoken
-- Tour focus areas
-- Contact or booking CTA
-
----
-
-### 2.5 How to manage fan shop links
-
-You usually manage fan shop links in three places:
-
-1. **Elementor buttons** (homepage/shop sections).
-2. **Navigation menus** in **Appearance → Menus**.
-3. **Any promotional banners** inside Elementor pages/posts.
-
-Best practice:
-
-- Use one canonical shop URL.
-- Update all major CTAs after changing the link.
-- After updating links, click through them on mobile and desktop.
-
----
-
-### 2.6 How to maintain SEO basics (editor workflow)
-
-For every important page/post:
-
-1. Set one primary keyword/topic.
-2. Write a clear page title with that topic.
-3. Write a short meta description in your SEO plugin.
-4. Keep one H1 and logical H2/H3 headings.
-5. Add internal links to related tours, guides, and shop pages.
-6. Add alt text to every meaningful image.
-7. Update content when details change (dates, pricing, availability).
-
-Monthly SEO hygiene:
-
-- Check broken links (especially booking/shop links).
-- Refresh top pages with new details or FAQs.
-- Confirm homepage and tour pages still match user intent.
-
----
-
-## 3) Quick maintenance checklist
-
-### Developer
-
-- Keep `functions.php` lightweight and modular.
-- Test template hierarchy after adding new content types.
-- Avoid CSS conflicts with Elementor by scoping custom rules.
-- Keep JS optional and performance-focused.
-
-### Editor
-
-- Update tour offers and guide info regularly.
-- Verify all booking/shop links after every content update.
-- Maintain clear headings and image alt text.
-- Preview desktop + mobile before publishing.
-
----
-
-## 4) Current limitations to be aware of
-
-- `footer.php` has no output yet (add markup if you need a theme-level footer fallback).
-- `assets/js/main.js` is currently empty.
-- No dedicated tours/guides custom post types are included by default.
-
-These are normal for an Elementor-first project and can be expanded as requirements grow.
